@@ -5,20 +5,24 @@ A minimal Next.js App Router template for Open Campus mini-apps. Designed to run
 ## Quick Start
 
 1. **Clone or use as template**
+
    ```bash
    git clone <this-repo>
    cd oc-miniapp-template
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Configure environment**
+
    ```bash
    cp .env.example .env
    ```
+
    The default values match the staging environment.
 
 4. **Start development server**
@@ -74,10 +78,10 @@ Visit `/your-page` to see it.
 Create `app/api/your-endpoint/route.ts`:
 
 ```tsx
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 export async function GET() {
-  return NextResponse.json({ message: 'Hello!' });
+  return NextResponse.json({ message: "Hello!" });
 }
 ```
 
@@ -86,9 +90,10 @@ export async function GET() {
 Mini-apps run embedded in the OC Hub iframe. Authentication is shared via cookies on `.educhain.xyz` - no login flow needed.
 
 ### Access User Info
+
 ```tsx
-'use client';
-import { useOCAuth } from '@opencampus/ocid-connect-js';
+"use client";
+import { useOCAuth } from "@opencampus/ocid-connect-js";
 
 export function MyComponent() {
   const auth = useOCAuth();
@@ -104,30 +109,30 @@ export function MyComponent() {
 ## Tracking Events
 
 ```tsx
-'use client';
-import { trackEvent } from '@/lib/analytics';
+"use client";
+import { trackEvent } from "@/lib/analytics";
 
-trackEvent('button_clicked', { button: 'signup' });
+trackEvent("button_clicked", { button: "signup" });
 ```
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_AUTH_CLIENT_ID` | OCConnect client ID |
-| `NEXT_PUBLIC_AUTH_SANDBOX` | Use sandbox mode (default: `true`) |
-| `NEXT_PUBLIC_GA_ID` | Google Analytics ID (optional) |
+| Variable                     | Description                        |
+| ---------------------------- | ---------------------------------- |
+| `NEXT_PUBLIC_AUTH_CLIENT_ID` | OCConnect client ID                |
+| `NEXT_PUBLIC_AUTH_SANDBOX`   | Use sandbox mode (default: `true`) |
+| `NEXT_PUBLIC_GA_ID`          | Google Analytics ID (optional)     |
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm start` | Start production server |
+| Command         | Description              |
+| --------------- | ------------------------ |
+| `npm run dev`   | Start development server |
+| `npm run build` | Build for production     |
+| `npm start`     | Start production server  |
 
 ## Learn More
 
 - [Next.js Documentation](https://nextjs.org/docs)
-- [Open Campus OCID](https://docs.opencampus.xyz/ocid)
+- [Open Campus OCID](https://devdocs.educhain.xyz/start-building/open-campus-id-connect-sdk)
 - [Tailwind CSS v4](https://tailwindcss.com/docs)
