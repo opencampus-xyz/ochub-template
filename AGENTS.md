@@ -89,7 +89,9 @@ Then use it as `bg-your-new-color`, `text-your-new-color`, etc.
 
 ## Authentication
 
-Auth is already set up. Here's how to use it:
+Auth is delivered via hash fragment token injection. When the app runs inside OC Hub, the hub appends `#id_token=<jwt>&access_token=<jwt>` to the iframe URL. Both tokens are read from the hash and written to localStorage before the OCConnect SDK initializes (see `providers.tsx`), so `useOCAuth()` works seamlessly on first render. In standalone/dev mode (no hash tokens), the app falls back to normal auth.
+
+Here's how to use it:
 
 ### Getting the logged-in user in a component
 
