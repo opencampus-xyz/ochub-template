@@ -29,7 +29,7 @@ A minimal Next.js App Router template for Open Campus mini-apps. Designed to run
    ```bash
    npm run dev
    ```
-   Open [http://localhost:3000](http://localhost:3000) to see your app.
+   This starts both the Next.js app and the [OC Hub Harness](https://github.com/opencampus/ochub-harness) side by side. Open [http://localhost:8080](http://localhost:8080) to see your app running inside the simulated hub.
 
 ## Project Structure
 
@@ -123,13 +123,32 @@ trackEvent("button_clicked", { button: "signup" });
 | `NEXT_PUBLIC_AUTH_SANDBOX`   | Use sandbox mode (default: `true`) |
 | `NEXT_PUBLIC_GA_ID`          | Google Analytics ID (optional)     |
 
+## Development with Harness
+
+The `dev` script runs the [OC Hub Harness](https://github.com/opencampus/ochub-harness) alongside Next.js. The harness simulates the OC Hub iframe environment, injecting authentication tokens so you can develop and test locally without deploying.
+
+Harness log lines are prefixed with `@opencampus/ochub-harness:` so they're easy to distinguish from Next.js output.
+
+### Harness Options
+
+To customise the harness, edit the `dev` script in `package.json`:
+
+```jsonc
+"dev": "npx concurrently --raw 'npx @opencampus/ochub-harness --port 9000 --url http://localhost:3000' 'next dev -p 3000'"
+```
+
+| Flag     | Default                 | Description                 |
+| -------- | ----------------------- | --------------------------- |
+| `--url`  | `http://localhost:3000` | URL of your mini-app        |
+| `--port` | `8080`                  | Port for the harness server |
+
 ## Scripts
 
-| Command         | Description              |
-| --------------- | ------------------------ |
-| `npm run dev`   | Start development server |
-| `npm run build` | Build for production     |
-| `npm start`     | Start production server  |
+| Command         | Description                         |
+| --------------- | ----------------------------------- |
+| `npm run dev`   | Start dev server + harness together |
+| `npm run build` | Build for production                |
+| `npm start`     | Start production server             |
 
 ## Learn More
 
