@@ -215,6 +215,8 @@ Already configured in `.env`. Do not change these unless instructed:
 |----------|-------------|
 | `NEXT_PUBLIC_AUTH_CLIENT_ID` | Auth client ID |
 | `NEXT_PUBLIC_AUTH_SANDBOX` | Sandbox mode (`true` for development) |
+| `JWKS_URL` | JWKS endpoint used to verify ID tokens (optional, defaults to staging) |
+| `JWT_AUDIENCE` | Expected `aud` claim on ID tokens. Optional in sandbox mode, required when `NEXT_PUBLIC_AUTH_SANDBOX=false` |
 | `NEXT_PUBLIC_GA_ID` | Google Analytics ID (optional) |
 
 ## Before Finishing

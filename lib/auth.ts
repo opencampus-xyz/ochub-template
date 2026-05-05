@@ -1,4 +1,4 @@
-import { createRemoteJWKSet, jwtVerify, JWTPayload } from "jose";
+import { createRemoteJWKSet, jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "./env";
 
@@ -30,7 +30,19 @@ export function withAuth(
 
       const token = authHeader.slice(7);
 
-      const { payload } = await jwtVerify(token, jwks);
+      if (!env.JWT_AUDIENCE && !env.NEXT_PUBLIC_AUTH_SANDBOX) {
+        console.error(
+          "JWT_AUDIENCE must be set when NEXT_PUBLIC_AUTH_SANDBOX is false",
+        );
+        return NextResponse.json(
+          { error: "Internal server error" },
+          { status: 500 },
+        );
+      }
+
+      const { payload } = await jwtVerify(token, jwks, {
+        audience: env.JWT_AUDIENCE,
+      });
       const OCId = payload.edu_username as string | undefined;
 
       if (!OCId) {
