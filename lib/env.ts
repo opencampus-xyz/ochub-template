@@ -4,7 +4,6 @@ export const env = {
   NEXT_PUBLIC_AUTH_SANDBOX:
     (process.env.NEXT_PUBLIC_AUTH_SANDBOX ?? "true") === "true",
   JWKS_URL: process.env.JWKS_URL,
-  JWT_AUDIENCE: process.env.JWT_AUDIENCE,
 
   // Analytics
   NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,

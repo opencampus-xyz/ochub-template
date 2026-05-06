@@ -30,9 +30,9 @@ export function withAuth(
 
       const token = authHeader.slice(7);
 
-      if (!env.JWT_AUDIENCE && !env.NEXT_PUBLIC_AUTH_SANDBOX) {
+      if (!env.NEXT_PUBLIC_AUTH_SANDBOX && !env.NEXT_PUBLIC_AUTH_CLIENT_ID) {
         console.error(
-          "JWT_AUDIENCE must be set when NEXT_PUBLIC_AUTH_SANDBOX is false",
+          "NEXT_PUBLIC_AUTH_CLIENT_ID must be set when NEXT_PUBLIC_AUTH_SANDBOX is false",
         );
         return NextResponse.json(
           { error: "Internal server error" },
@@ -41,7 +41,7 @@ export function withAuth(
       }
 
       const { payload } = await jwtVerify(token, jwks, {
-        audience: env.JWT_AUDIENCE,
+        audience: env.NEXT_PUBLIC_AUTH_CLIENT_ID,
       });
       const OCId = payload.edu_username as string | undefined;
 

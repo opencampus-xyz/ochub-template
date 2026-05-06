@@ -22,11 +22,13 @@ public/         → Static assets (images, icons, etc.)
 ```
 
 Key files you'll work with:
+
 - `app/page.tsx` — The home page. Edit this to build your main UI.
 - `components/TabNav.tsx` — The tab navigation bar. Add new tabs here.
 - `app/globals.css` — Brand color definitions. Add new colors here.
 
 Files you should NOT modify:
+
 - `app/layout.tsx` — Root layout
 - `app/providers.tsx` — Auth provider
 - `lib/auth.ts` — API authentication
@@ -37,18 +39,21 @@ Files you should NOT modify:
 
 ### Brand Colors
 
-| Color | Class prefix | Hex | When to use |
-|-------|-------------|-----|-------------|
+| Color      | Class prefix | Hex       | When to use                                  |
+| ---------- | ------------ | --------- | -------------------------------------------- |
 | Brand Blue | `brand-blue` | `#141beb` | Buttons, links, active tabs, primary actions |
-| Brand Cyan | `brand-cyan` | `#02eec4` | Accents, highlights, gradients |
+| Brand Cyan | `brand-cyan` | `#02eec4` | Accents, highlights, gradients               |
 
 Examples: `bg-brand-blue`, `text-brand-blue`, `border-brand-blue`, `bg-brand-cyan`, `text-brand-cyan`
 
 ### Standard Patterns
 
 **Primary button:**
+
 ```html
-<button className="bg-brand-blue text-white rounded-lg px-4 py-2 hover:opacity-90 transition-opacity">
+<button
+  className="bg-brand-blue text-white rounded-lg px-4 py-2 hover:opacity-90 transition-opacity"
+>
   Click me
 </button>
 ```
@@ -58,12 +63,11 @@ Examples: `bg-brand-blue`, `text-brand-blue`, `border-brand-blue`, `bg-brand-cya
 **Active tab / selected item:** use `text-brand-blue border-brand-blue` (see `components/TabNav.tsx`).
 
 **Page layout:**
+
 ```tsx
 <main className="min-h-screen">
   <TabNav />
-  <div className="p-6">
-    {/* Your content */}
-  </div>
+  <div className="p-6">{/* Your content */}</div>
 </main>
 ```
 
@@ -78,6 +82,7 @@ Examples: `bg-brand-blue`, `text-brand-blue`, `border-brand-blue`, `bg-brand-cya
 ### Adding New Colors
 
 Add to the `@theme inline` block in `app/globals.css`:
+
 ```css
 @theme inline {
   --color-brand-blue: #141beb;
@@ -85,6 +90,7 @@ Add to the `@theme inline` block in `app/globals.css`:
   --color-your-new-color: #hexvalue;
 }
 ```
+
 Then use it as `bg-your-new-color`, `text-your-new-color`, etc.
 
 ## Authentication
@@ -96,9 +102,9 @@ Here's how to use it:
 ### Getting the logged-in user in a component
 
 ```tsx
-'use client';
+"use client";
 
-import { useOCAuth } from '@opencampus/ocid-connect-js';
+import { useOCAuth } from "@opencampus/ocid-connect-js";
 
 export function MyComponent() {
   const auth = useOCAuth();
@@ -116,16 +122,16 @@ export function MyComponent() {
 Always pass the auth token when calling your API routes:
 
 ```tsx
-'use client';
+"use client";
 
-import { useOCAuth } from '@opencampus/ocid-connect-js';
+import { useOCAuth } from "@opencampus/ocid-connect-js";
 
 export function MyComponent() {
   const auth = useOCAuth();
 
   const callApi = async () => {
     const idToken = auth.ocAuth?.getIdToken?.();
-    const res = await fetch('/api/your-endpoint', {
+    const res = await fetch("/api/your-endpoint", {
       headers: {
         Authorization: `Bearer ${idToken}`,
       },
@@ -146,14 +152,14 @@ export function MyComponent() {
 Create a file at `app/api/your-endpoint/route.ts`:
 
 ```ts
-import { NextResponse } from 'next/server';
-import { withAuth } from '@/lib/auth';
+import { NextResponse } from "next/server";
+import { withAuth } from "@/lib/auth";
 
 export const GET = withAuth(async (req, { ocId, ethAddress }) => {
   // ocId is the logged-in user's Open Campus ID
   // ethAddress is their wallet address (may be undefined)
 
-  return NextResponse.json({ message: 'Hello', ocId });
+  return NextResponse.json({ message: "Hello", ocId });
 });
 
 export const POST = withAuth(async (req, { ocId }) => {
@@ -168,8 +174,9 @@ export const POST = withAuth(async (req, { ocId }) => {
 ## Adding Pages
 
 1. Create a new file at `app/your-page/page.tsx`:
+
 ```tsx
-import { TabNav } from '@/components/TabNav';
+import { TabNav } from "@/components/TabNav";
 
 export default function YourPage() {
   return (
@@ -185,6 +192,7 @@ export default function YourPage() {
 ```
 
 2. Add a tab for it in `components/TabNav.tsx` by adding to the `tabs` array:
+
 ```tsx
 {
   label: 'Your Page',
@@ -202,22 +210,21 @@ export default function YourPage() {
 Track user actions from any client component:
 
 ```tsx
-import { trackEvent } from '@/lib/analytics';
+import { trackEvent } from "@/lib/analytics";
 
-trackEvent('button_clicked', { button: 'signup' });
+trackEvent("button_clicked", { button: "signup" });
 ```
 
 ## Environment Variables
 
 Already configured in `.env`. Do not change these unless instructed:
 
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_AUTH_CLIENT_ID` | Auth client ID |
-| `NEXT_PUBLIC_AUTH_SANDBOX` | Sandbox mode (`true` for development) |
-| `JWKS_URL` | JWKS endpoint used to verify ID tokens (optional, defaults to staging) |
-| `JWT_AUDIENCE` | Expected `aud` claim on ID tokens. Optional in sandbox mode, required when `NEXT_PUBLIC_AUTH_SANDBOX=false` |
-| `NEXT_PUBLIC_GA_ID` | Google Analytics ID (optional) |
+| Variable                     | Description                                                            |
+| ---------------------------- | ---------------------------------------------------------------------- |
+| `NEXT_PUBLIC_AUTH_CLIENT_ID` | OCID client ID (required if not in sandbox)                            |
+| `NEXT_PUBLIC_AUTH_SANDBOX`   | Sandbox mode (`true` for development)                                  |
+| `JWKS_URL`                   | JWKS endpoint used to verify ID tokens (optional, defaults to staging) |
+| `NEXT_PUBLIC_GA_ID`          | Google Analytics ID (optional)                                         |
 
 ## Before Finishing
 
